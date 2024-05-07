@@ -59,8 +59,8 @@
                         <td>{{$records->gander}}</td>
                         <td>{{$records->desc}}</td>
                         <td>
-                            <a href="{{url('datatable/'.$records->user_id.'/edit')}}" class="btn">Edit</a>
-                            <a href="{{url('datatable/'.$records->user_id.'/delete')}}" class="btn">Delete</a>
+                            <a href="{{url('datatable/'.$records->id.'/edit')}}" class="btn">Edit</a>
+                            <a href="{{url('datatable/'.$records->id.'/delete')}}" class="btn">Delete</a>
                         </td>
                     </tr>
                     @endforeach

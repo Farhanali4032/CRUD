@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('age',);
             $table->enum('gander', ['male', 'female', 'other']);
             $table->text('desc');
-            $table->text('hobbies');
             $table->timestamps();
         });
     }

@@ -21,4 +21,12 @@ class user_record extends Model
     public function subject(){
         return $this->belongsToMany(subject::class, 'subject_user_record');
     }
+
+    public function userImage(){
+        return $this->hasMany(user_images::class);
+    }
+
+    public function hobbies(){
+        return $this->hasMany(Hobbies::class);
+    }
 }

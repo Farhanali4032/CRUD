@@ -39,6 +39,7 @@
 </div>
 <!-- Libs JS -->
 <!-- <script src="{{ asset('assets/dist/libs/list.js?1684106062') }}" defer></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ asset('assets/dist/libs/nouislider/dist/nouislider.min.js?1684106062') }}" defer></script>
 <script src="{{ asset('assets/dist/libs/litepicker/dist/litepicker.js?1684106062') }}" defer></script>
 <script src="{{ asset('assets/dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062') }}" defer></script>
@@ -55,13 +56,18 @@
 <!-- New Input Add -->
 <script type="text/javascript">
   $("#rowAdder").click(function() {
-    newRowAdd =
-      '<div id="row"> <div class="input-group">' +
-      '<div class="input-group-prepend">' +
-      '<button class="btn btn-lime w-100" mt-1" id="RmoveRow" type="button">Remove</button> </div>' +
-      '<input type="text" class="form-control m-input mt-1" name = "hobbies[]" value = "{{old('hobbies[]')}}"> </div> </div>';
+    if ($('#newhobby .row').length < 5) {
+        let newRowAdd =
+            '<div class="row"> <div class="input-group">' +
+            '<div class="input-group-prepend">' +
+            '<button style="margin-top:5px" class="btn btn-lime w-100 mt-1 removeRow" type="button">Remove</button> </div>' +
+            '<input type="text" class="form-control m-input mt-1" name="hobbies[]"> </div> </div>';
 
-    $('#newhobby').append(newRowAdd);
+        $('#newhobby').append(newRowAdd);
+    } else {
+        // Alert or handle when the limit is reached
+        alert("You can only add up to 5 fields.");
+    }
   });
   $("body").on("click", "#RmoveRow", function() {
     $(this).parents("#row").remove();
@@ -84,7 +90,7 @@
     				if( data.customProperties ){
     					return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
     				}
-    				return '<div>' + escape(data.text) + '</div>';
+    				return '<div>' + escape(data.text) + '</div>'; 
     			},
     		},
     	}));

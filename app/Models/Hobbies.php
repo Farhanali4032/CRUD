@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class user_images extends Model
+class Hobbies extends Model
 {
     use HasFactory;
-    protected $table = "user_images";
-    protected $primaryKey = "image_id";
-    
+
+    protected $table = 'hobbies';
+
+    protected $primaryKey= 'id';
+
     protected $fillable = [
-        'user_id ',
-        'image_name'
+        'hobbies'
     ];
 
     public function user_record(){

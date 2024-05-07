@@ -23,10 +23,20 @@ Route::post('create/record' , [UserController::class, 'userData']);
 Route::get('/user_records',[UserController::class, 'view_user']);
 
 // CRUD Route
-Route::get('datatable/{user_id}/edit',[CrudController::class, 'edit']);
+Route::get('datatable/{id}/edit',[CrudController::class, 'edit']);
 // Route Update Record
-Route::put('update/record/{user_id}/edit', [CrudController::class, 'update']);
+Route::put('update/record/{id}/edit', [CrudController::class, 'update']);
 //Route Delete Record
-Route::get('datatable/{user_id}/delete', [CrudController::class, 'delete']);
+Route::get('datatable/{id}/delete', [CrudController::class, 'delete']);
 
+
+
+
+
+
+
+
+
+// test route
+Route::get('farhan', [UserController::class, 'test']);
 

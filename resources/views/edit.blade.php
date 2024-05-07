@@ -4,7 +4,7 @@
       <div class="elrat elart-susscess">{{session['status']}}</div>
   @endif
   <div class="container container-tight py-4">
-    <form method="POST" class="card card-md" action="{{url('update/record/'.$user_record->user_id.'/edit')}}" enctype="multipart/form-data" autocomplete="off" novalidate>
+    <form method="POST" class="card card-md" action="{{url('update/record/'.$user_record->id.'/edit')}}" enctype="multipart/form-data" autocomplete="off" novalidate>
       @csrf
       @method('PUT')
       <div class="card-body">
@@ -67,9 +67,25 @@
           </div>
         </div>
         <div class="mb-3">
+          <label class="form-label">Subject</label>
+          <span class="text-danger">
+            @error('subjects')
+            {{$message}}
+            @enderror
+          </span>
+          <select type="text" class="form-select" placeholder="Select Subject" id="select-tags" name="subjects[]" multiple>
+            @foreach($user_record->subject as $subj)
+            <option value="{{$subj->id}}" selected> {{ $subj->subject }}</option>
+            @endforeach
+            @foreach ($subjects as $subj)
+            <option value="{{$subj->id}}"> {{ $subj->subject }}</option>
+            @endforeach
+          </select>
+      </div>
+        <div class="mb-3">
           <label class="form-label">Description<span class="form-label-description"></span></label>
           <textarea class="form-control" name="desc" rows="6" placeholder="Content..">{{$user_record->desc}}</textarea>
-          <span>
+          <span class="text-danger">
             @error('desc')
             {{$message}}
             @enderror

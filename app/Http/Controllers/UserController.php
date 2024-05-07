@@ -11,6 +11,26 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
+
+    // public function test()
+    // {
+    //     $user_record = user_record::find(10);
+    //     compact('user_record');
+    //     // return $user_recordl
+    //     // echo $user_record->fname;
+    //     // foreach ($user_record->subject as $subj) {
+    //     //     echo $subj->subject;
+    //     // }
+
+    //     $findImage = user_images::findOrFail();
+    //         print_r($findImage);
+    //     foreach($findImage as $path){
+    //         // $path->image_name;
+    //         dd($path);
+    //     }
+
+    // }
+
     function index()
     {
         $subjects = subject::all();
@@ -22,47 +42,28 @@ class UserController extends Controller
     {
         //temporary user id because no user
         $id = $request['user_id'];
-        $subj = $request['subjects'];
+        $hobbies = $request['hobbies'];
+        $m_user_record = new user_record;
 
         $request->validate(
             [
 
                 'fname' => 'required|string|max:20',
                 'email' => 'required|email|max:255',
-                'phoneNo' => 'required|string|max:20',
+                'phoneNo' => 'required|regex:/^(\+\d{1,3}[- ]?)?\d{10}$/',
                 'age' => 'required|integer|max:110',
-                'gander' => 'in:male,female,other',
-                'subjects.*' => 'required',
+                'gander' => 'required|in:male,female,other',
+                'subjects' => 'required',
+                'subjects.*' => 'string',
                 'desc' => 'required|string|max:255',
                 'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:4048',
-                'hobbies.*' => 'required|string|max:100'
+
 
             ]
-        );
-
-        //Image file check
-        if ($request->hasFile('images')) {
-            $images = $request->file('images');
-            $imageData = [];
-            foreach ($images as $image) {
-                $extension = $image->getClientOriginalExtension();
-                $image_name = time() . '.' . $extension;
-                $path = 'uploads/images';
-                $image->move($path, $image_name);
-                $imageData[] = [
-                    'user_id' => $id,
-                    'image_name' => $image_name
-                ];
-            }
-        // send images in model
-        user_images::insert($imageData);
-        }
-        //user Hobby
-        $hobbies = $request['hobbies'];
-        $hobbies = implode(',', $hobbies);
+        );    
 
         //Get Record and Store into the Table
-        $m_user_record = new user_record;
+      
         $m_user_record->user_id = $id;
         $m_user_record->fname = $request['fname'];
         $m_user_record->email = $request['email'];
@@ -70,10 +71,34 @@ class UserController extends Controller
         $m_user_record->age = $request['age'];
         $m_user_record->gander = $request['gander'];
         $m_user_record->desc = $request['desc'];
-        $m_user_record->hobbies = $hobbies;
         $m_user_record->save();
+
+        // Hobbies 
+
+        foreach($hobbies as $hobby){
+            $m_user_record->hobbies()->create([
+                'hobbies' => $hobby
+            ]);
+        }
+        //Image file check
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            // $imageData = [];
+            foreach ($images as $image) {
+                $extension = $image->getClientOriginalExtension();
+                $image_name = time() . '.' . $extension;
+                $path = 'uploads/images';
+                $image->move($path, $image_name);
+                // send images in model
+                $m_user_record->userImage()->create([
+                    'image_name' => $image_name 
+                ]);
+            }
+        }
+        $m_user_record->subject()->attach($request['subjects']);
+
         
-        $m_user_record->subject()->attach($subj);
+        
 
         return redirect('/user_records')->with('status', 'Record Created');
     }

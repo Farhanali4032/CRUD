@@ -1,4 +1,5 @@
 @include('header')
+
 <div class="page page-center">
   <div class="container container-tight py-4">
     <form method="POST" class="card card-md" action="{{url('create/record')}}" enctype="multipart/form-data" autocomplete="off" novalidate>
@@ -64,10 +65,16 @@
           </div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Tags input</label>
-          <select type="text" class="form-select" placeholder="Select tags" id="select-tags" name="subjects[]" multiple>
+          <label class="form-label">Subject</label>
+          <span class="text-danger">
+            @error('subjects')
+            {{$message}}
+            @enderror
+          </span>
+          <select type="text" class="form-select" placeholder="Select Subject" id="select-tags" name="subjects[]" multiple>
+            <span>hi</span>
             @foreach($subjects as $subject)
-            <option value="{{$subject->id}}"> {{ $subject->subject }}</option>
+            <option value="{{$subject->id}}"> {{ $subject->subject}}</option>
             @endforeach
           </select>
       </div>
@@ -78,7 +85,7 @@
       <div class="mb-3">
         <label class="form-label">Description<span class="form-label-description"></span></label>
         <textarea class="form-control" name="desc" rows="6" placeholder="Content..">{{old('desc')}}</textarea>
-        <span>
+        <span class="text-danger">
           @error('desc')
           {{$message}}
           @enderror

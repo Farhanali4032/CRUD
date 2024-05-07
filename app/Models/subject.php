@@ -9,7 +9,7 @@ class subject extends Model
 {
     use HasFactory;
     protected $table = 'subject_seeder';
-    protected $id = 'id';
+    protected $primaryKey = 'id';
 
 
     public function user_record() {
