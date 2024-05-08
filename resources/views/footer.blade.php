@@ -44,8 +44,8 @@
 <script src="{{ asset('assets/dist/libs/litepicker/dist/litepicker.js?1684106062') }}" defer></script>
 <script src="{{ asset('assets/dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062') }}" defer></script>
 <!-- Tabler Core -->
-<!-- <script src="./dist/js/tabler.min.js?1684106062" defer></script> -->
-<!-- <script src="./dist/js/demo.min.js?1684106062" defer></script> -->
+<script src="{{ asset('assets/dist/js/tabler.min.js?1684106062') }}" defer></script> 
+<script src="{{ asset('assets/dist/js/demo.min.js?1684106062') }}" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <!-- Datatable -->

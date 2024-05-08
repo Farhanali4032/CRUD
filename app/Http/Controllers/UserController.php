@@ -37,6 +37,15 @@ class UserController extends Controller
         return view('form', compact('subjects'));
     }
 
+        //User Data 
+        public function view_user()
+        {
+    
+            $user_records = user_record::all();
+            $data = compact('user_records');
+            return view('dashboard')->with($data);
+        }
+
 
     function userData(Request $request)
     {
@@ -103,12 +112,5 @@ class UserController extends Controller
         return redirect('/user_records')->with('status', 'Record Created');
     }
 
-    //User Data 
-    public function view_user()
-    {
 
-        $user_records = user_record::all();
-        $data = compact('user_records');
-        return view('datatable')->with($data);
-    }
 }
