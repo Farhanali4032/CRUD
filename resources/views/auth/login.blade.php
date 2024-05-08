@@ -18,6 +18,11 @@
                                     @csrf
                                     <div class="mb-3">
                                         <label class="form-label">Email address</label>
+                                        <span class="text-danger">
+                                            @error('email')
+                                                {{$message}}
+                                            @enderror
+                                        </span>
                                         <input type="email" name="email" class="form-control" placeholder="Email"
                                             autocomplete="username">
                                     </div>
@@ -31,11 +36,15 @@
                                                
                                             </span>
                                         </label>
+                                        <span class="textdanger">
+                                            @error('password')
+                                                {{$message}}
+                                            @enderror
+                                        </span>
                                         <div class="input-group input-group-flat">
-                                            <input type="password" name="password" class="form-control"
-                                                placeholder="Password" autocomplete="off">
+                                            <input type="password" name="password" class="form-control" id="passwordField" placeholder="Password" autocomplete="off">
                                             <span class="input-group-text">
-                                                <a href="#" class="link-secondary" title="Show password"
+                                                <a href="#" class="link-secondary toggle-password" title="Show password"
                                                     data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon"
                                                         width="24" height="24" viewBox="0 0 24 24"

@@ -5,31 +5,40 @@ namespace App\Http\Controllers;
 use App\Models\subject;
 use App\Models\user_images;
 use App\Models\user_record;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 
 class UserController extends Controller
 {
 
 
-    // public function test()
-    // {
-    //     $user_record = user_record::find(10);
-    //     compact('user_record');
-    //     // return $user_recordl
-    //     // echo $user_record->fname;
-    //     // foreach ($user_record->subject as $subj) {
-    //     //     echo $subj->subject;
-    //     // }
+    public function test()
+    {
 
-    //     $findImage = user_images::findOrFail();
-    //         print_r($findImage);
-    //     foreach($findImage as $path){
-    //         // $path->image_name;
-    //         dd($path);
-    //     }
+        // if (Auth::check()) {
+        //     $userId = Auth::id();
+        //     echo $userId;
+        // }
+        // dd($userId);
+        //     $user_record = user_record::find(10);
+        //     compact('user_record');
+        //     // return $user_recordl
+        //     // echo $user_record->fname;
+        //     // foreach ($user_record->subject as $subj) {
+        //     //     echo $subj->subject;
+        //     // }
 
-    // }
+        //     $findImage = user_images::findOrFail();
+        //         print_r($findImage);
+        //     foreach($findImage as $path){
+        //         // $path->image_name;
+        //         dd($path);
+        //     }
+
+    }
 
     function index()
     {
@@ -37,14 +46,18 @@ class UserController extends Controller
         return view('form', compact('subjects'));
     }
 
-        //User Data 
-        public function view_user()
-        {
-    
+    //User Data 
+    public function view_user()
+    {
+        if (Auth::check()) {
+            $user = Auth::User();
+            Session(['user_name' => $user->name]);
+            Session(['user_email' => $user->email]);
             $user_records = user_record::all();
             $data = compact('user_records');
             return view('dashboard')->with($data);
         }
+    }
 
 
     function userData(Request $request)
@@ -69,10 +82,10 @@ class UserController extends Controller
 
 
             ]
-        );    
+        );
 
         //Get Record and Store into the Table
-      
+
         $m_user_record->user_id = $id;
         $m_user_record->fname = $request['fname'];
         $m_user_record->email = $request['email'];
@@ -84,7 +97,7 @@ class UserController extends Controller
 
         // Hobbies 
 
-        foreach($hobbies as $hobby){
+        foreach ($hobbies as $hobby) {
             $m_user_record->hobbies()->create([
                 'hobbies' => $hobby
             ]);
@@ -100,17 +113,15 @@ class UserController extends Controller
                 $image->move($path, $image_name);
                 // send images in model
                 $m_user_record->userImage()->create([
-                    'image_name' => $image_name 
+                    'image_name' => $image_name
                 ]);
             }
         }
         $m_user_record->subject()->attach($request['subjects']);
 
-        
-        
+
+
 
         return redirect('/user_records')->with('status', 'Record Created');
     }
-
-
 }
