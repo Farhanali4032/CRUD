@@ -9,6 +9,15 @@ use App\Models\user_record;
 
 class CrudController extends Controller
 {
+
+    // function __construct()
+    // {
+    //     $this->middleware(['permission:student-list|student-create|student-edit|student-delete'], ['only' => ['index', 'show']]);
+    //     $this->middleware(['permission:student-create'], ['only' => ['create', 'store']]);
+    //     $this->middleware(['permission:student-edit'], ['only' => ['edit', 'update']]);
+    //     $this->middleware(['permission:student-delete'], ['only' => ['destroy']]);
+    // }
+
     function edit($id){
         
         $user_record = user_record::findOrFail($id);
@@ -21,7 +30,7 @@ class CrudController extends Controller
         $request->validate([
             'fname' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'phoneNo' => 'required|regex:/^(\+\d{1,3}[- ]?)?\d{10}$/',
+            'phoneNo' => 'required|numeric|digits_between:10,15',
             'age' => 'required|integer|max:110',
             'gander' => 'in:male,female,other',
             'subjects' => 'required',

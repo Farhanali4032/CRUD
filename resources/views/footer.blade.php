@@ -95,6 +95,15 @@
     		},
     	}));
     });
+
+
+
+    $(document).ready(function() {
+        $('input[type="checkbox"]').on('change', function() {
+            var anyChecked = $('input[type="checkbox"]:checked').length > 0;
+            $('#submitButton').toggle(anyChecked);
+        });
+    });
 </script>
 </body>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\subject;
+use App\Models\User;
 use App\Models\user_images;
 use App\Models\user_record;
 use Illuminate\Contracts\Session\Session;
@@ -10,6 +11,8 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
+use Spatie\Permission\Middlewares\PermissionMiddleware;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -38,7 +41,22 @@ class UserController extends Controller
         //         dd($path);
         //     }
 
+        //   $roles = Role::pluck('name','name')->all();  ////Find Role
+        // $user = User::find(1);
+        // $roleName = 'Manger';
+        // $role = Role::where('name', $roleName)->first();
+        // if (!$role) {
+        //     $role = Role::create(['name' => $roleName]);
+        // }
+        // $user->roles()->detach();
+        // $user->assignRole($role);
+
+
+        // $userId = auth()->id(); \\get current id
+    //     echo $userId;
+    //     dd($userId);
     }
+
 
     function index()
     {
@@ -72,7 +90,7 @@ class UserController extends Controller
 
                 'fname' => 'required|string|max:20',
                 'email' => 'required|email|max:255',
-                'phoneNo' => 'required|regex:/^(\+\d{1,3}[- ]?)?\d{10}$/',
+                'phoneNo' => 'required|numeric|digits_between:10,15',
                 'age' => 'required|integer|max:110',
                 'gander' => 'required|in:male,female,other',
                 'subjects' => 'required',

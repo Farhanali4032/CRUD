@@ -13,7 +13,7 @@ class subject extends Model
 
 
     public function user_record() {
-        return $this->belongsToMany(User::class, 'subject_user_record');
+        return $this->belongsToMany(user_record::class, 'subject_user_record');
     }
 
 }

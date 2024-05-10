@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            subject_Seeder::class
+            subject_Seeder::class,
+            privateseeder::class
         ]);
 
     }
