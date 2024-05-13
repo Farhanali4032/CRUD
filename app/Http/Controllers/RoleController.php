@@ -10,20 +10,41 @@ class RoleController extends Controller
 {
 
     
-    public function index(Request $request)
+
+    
+    public function index()
     {
         $roles = Role::all();
         $permissions = Permission::all();
-        // foreach($roles as $roleKey => $roleName){
-        //     echo $roleKey;
-        //     dd();
-        // }
-        // dd($permissions);
         return view('roles.index', compact('roles', 'permissions'));
     }
 
 
-    public function setPermissionToRoles(Request $request){
-        dd($request->all());
+    public function setRolePermission(Request $request){
+
+        foreach($request->allPermissions as $permissionId){
+            // print_r($hpermissionId);
+            if(isset($request->permissions[$permissionId])){
+                $permission = Permission::findOrFail($permissionId);
+               $roles = $request->permissions[$permissionId];
+               $permission->syncRoles($roles);
+            }
+            else{
+                $permission = Permission::findOrFail($permissionId);
+    
+                $permission->syncRoles('');
+            }
+        }
+        return redirect()->back()->with('success', 'Permissions updated successfully.');
+
+    //    dd($request->permissions);
+            // foreach ($request->permissions as $permissionId => $roleName) {
+
+            //     $permission = Permission::findOrFail($permissionId);
+    
+            //     $permission->syncRoles($roleName);
+            // }
+    
+            // return redirect()->back()->with('success', 'Permissions updated successfully.');
     }
 }

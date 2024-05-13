@@ -48,6 +48,10 @@
 <script src="{{ asset('assets/dist/js/demo.min.js?1684106062') }}" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+{{-- My Scripts --}}
+<script>
+
+</script>
 <!-- Datatable -->
 <script>
     let table = new DataTable('#myTable');

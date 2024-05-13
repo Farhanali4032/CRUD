@@ -13,7 +13,7 @@
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
                         <a href="{{ url('roles')}}" class="btn btn-primary d-none d-sm-inline-block">
-                            Role
+                            Permissisons
                         </a>
                     </div>
                 </div>

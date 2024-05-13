@@ -10,14 +10,6 @@ use App\Models\user_record;
 class CrudController extends Controller
 {
 
-    // function __construct()
-    // {
-    //     $this->middleware(['permission:student-list|student-create|student-edit|student-delete'], ['only' => ['index', 'show']]);
-    //     $this->middleware(['permission:student-create'], ['only' => ['create', 'store']]);
-    //     $this->middleware(['permission:student-edit'], ['only' => ['edit', 'update']]);
-    //     $this->middleware(['permission:student-delete'], ['only' => ['destroy']]);
-    // }
-
     function edit($id){
         
         $user_record = user_record::findOrFail($id);
@@ -57,12 +49,6 @@ class CrudController extends Controller
         user_record::findOrFail($id)->delete();
 
         return redirect('/user_records')->with('status', 'Record Deleted');
-
-    }
-
-    function deleteImage($id){
-        
-        
 
     }
 

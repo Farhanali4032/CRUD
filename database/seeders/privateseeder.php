@@ -18,14 +18,16 @@ class privateseeder extends Seeder
      */
 
      private $permissions = [
-        'role-list',
-        'role-create',
-        'role-edit',
-        'role-delete',
         'student-list',
         'student-edit',
         'student-create',
         'student-delete',
+        'user-list',
+        'user-delete',
+        'user-edit',
+        'permission-list',
+        'set-permission',
+        'role-assign',
 
      ];
 
@@ -37,14 +39,13 @@ class privateseeder extends Seeder
          // Create admin User and assign the role to him.
          $user = User::create([
             'name' => 'bitzstudio',
-            'email' => 'bitzstudio@example.com',
+            'email' => 'bitzstudio@gmail.com',
             'password' => Hash::make('admin')
         ]);
 
         $adminRole = Role::create(['name' => 'Admin']);
         $managerRole = Role::create(['name' => 'Manager']);
         $userRole = Role::create(['name' => 'User']);
-        $userRole = Role::create(['name' => 'Null']);
 
 
         $permissions = Permission::pluck('id', 'id')->all();

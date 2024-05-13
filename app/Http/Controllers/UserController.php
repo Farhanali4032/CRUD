@@ -18,12 +18,21 @@ class UserController extends Controller
 {
 
 
+   
+
     public function test()
     {
 
         // if (Auth::check()) {
-        //     $userId = Auth::id();
-        //     echo $userId;
+        //     $userId = Auth::User();
+
+        //     // $user = User::findOrFail($userId);
+
+        //     // $role = $user->getRoleNames();
+        //     $role = User::findOrFail($userId->id)->getRoleNames();
+
+        //     dd($role);
+
         // }
         // dd($userId);
         //     $user_record = user_record::find(10);
@@ -37,7 +46,7 @@ class UserController extends Controller
         //     $findImage = user_images::findOrFail();
         //         print_r($findImage);
         //     foreach($findImage as $path){
-        //         // $path->image_name;
+                // $path->image_name;
         //         dd($path);
         //     }
 
@@ -69,8 +78,10 @@ class UserController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::User();
+            $role = User::findOrFail($user->id)->getRoleNames();
             Session(['user_name' => $user->name]);
             Session(['user_email' => $user->email]);
+            Session(['user_role' => $role]);
             $user_records = user_record::all();
             $data = compact('user_records');
             return view('dashboard')->with($data);
