@@ -235,13 +235,13 @@
                             <span class="avatar avatar-sm"
                                 style="background-image: url(./static/avatars/000m.jpg)"></span>
                             <div class="d-none d-xl-block ps-2">
-                                <div>{{ session('user_name')}}</div>
+                                <div>{{ session('user_name') }}</div>
                                 <div class="mt-1 small text-muted">
-                                    {{session('user_email')}}
+                                    {{ session('user_email') }}
                                     @foreach (session('user_role') as $role)
-                                    <span>({{ $role }})</span>  
+                                        <span>({{ $role }})</span>
                                     @endforeach
-                                    
+
                                 </div>
                             </div>
                         </a>
@@ -251,9 +251,9 @@
                             <a href="#" class="dropdown-item">Feedback</a>
                             <div class="dropdown-divider"></div>
                             <a href="./settings.html" class="dropdown-item">Settings</a>
-                            <form action="{{ route('logout')}}" method="post">
+                            <form action="{{ route('logout') }}" method="post">
                                 @csrf
-                              <button type="submit" class="dropdown-item">Logout</button>
+                                <button type="submit" class="dropdown-item">Logout</button>
                             </form>
                         </div>
                     </div>
@@ -285,7 +285,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{url('user-list')}}">
+                                <a class="nav-link" href="{{ url('user-list') }}">
                                     <span
                                         class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
@@ -304,10 +304,10 @@
                                         User List
                                     </span>
                                 </a>
-                                
+
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('products.index')}}">
+                                <a class="nav-link" href="{{ route('products.index') }}">
                                     <span
                                         class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
@@ -326,7 +326,68 @@
                                         Products
                                     </span>
                                 </a>
-                                
+
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M14 6a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
+                                            <path d="M7 14a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
+                                            <path d="M21 14a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
+                                            <path d="M14 18a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
+                                            <path d="M12 8v8"></path>
+                                            <path d="M6.316 12.496l4.368 -4.992"></path>
+                                            <path d="M17.684 12.496l-4.366 -4.99"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Category
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            @foreach (allCate() as $category)
+                                                
+                                            <a class="dropdown-item" href="{{ route('category.product',$category->id)}}">
+                                                {{ $category->name}}
+                                            </a>
+
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('cart.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M5 18a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                            <path d="M15 18a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                            <path d="M5 18h-1a1 1 0 0 1 -1 -1v-11a2 2 0 0 1 2 -2h12a4 4 0 0 1 4 4h-18">
+                                            </path>
+                                            <path d="M9 18h6"></path>
+                                            <path d="M19 18h1a1 1 0 0 0 1 -1v-4l-3 -5"></path>
+                                            <path d="M21 13h-7"></path>
+                                            <path d="M14 8v10"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Cart
+                                    </span>
+                                </a>
+
                             </li>
                         </ul>
                         <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">

@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\AddToCartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserListController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CrudController;
 use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\UsersController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Contracts\Permission;
 
@@ -79,6 +80,9 @@ Route::get('products', [ProductsController::class, 'index'])->name('products.ind
 Route::get('add/product', [ProductsController::class, 'addProduct'])->name('product.addProduct');
 Route::get('product/addtocart', [ProductsController::class, 'addToCart'])->name('product.addToCart');
 
+Route::get('cart', [AddToCartController::class, 'index'])->name('cart.index');
+Route::get('category/{id}', [ProductsController::class, 'categoryProduct'])->name('category.product');
+
 
 
 Route::get('test', [UserController::class, 'test']);
@@ -86,7 +90,7 @@ Route::get('test', [UserController::class, 'test']);
 //Role and Permission
 
 Route::resource('roles', RoleController::class);
-Route::resource('users', UsersController::class);
+Route::resource('users', UserController::class);
 Route::resource('user_record', userController::class);
 
 

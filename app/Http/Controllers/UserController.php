@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\subject;
 use App\Models\User;
+use App\Helpers\Func;
+use App\Models\Product;
+use App\Models\subject;
+use App\Models\Category;
 use App\Models\user_images;
 use App\Models\user_record;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
-use Spatie\Permission\Models\Role;
+use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 
 class UserController extends Controller
 {
@@ -22,6 +25,16 @@ class UserController extends Controller
 
     public function test()
     {
+
+        // $cate = Product::all();
+        
+
+    //    $cate = allCate();
+
+    //    foreach(allCate() as $category){
+    //     echo $category->id;
+    //    }
+    //    dd($cate);
 
         // if (Auth::check()) {
         //     $userId = Auth::User();
