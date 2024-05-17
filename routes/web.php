@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\AddToCartController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserListController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\CrudController;
-use App\Http\Controllers\ProductsController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CrudController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Spatie\Permission\Contracts\Permission;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\UserListController;
+use App\Http\Controllers\AddToCartController;
+use App\Http\Controllers\StripePaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,9 +84,18 @@ Route::get('product/addtocart', [ProductsController::class, 'addToCart'])->name(
 Route::get('cart', [AddToCartController::class, 'index'])->name('cart.index');
 Route::get('category/{id}', [ProductsController::class, 'categoryProduct'])->name('category.product');
 
+// add to cart
+
+Route::post('add/to/cart', [AddToCartController::class, 'addToCart'])->name('add.cart');
+Route::get('remove/to/cart', [AddToCartController::class, 'removeToCart'])->name('remvoe.cart');
 
 
-Route::get('test', [UserController::class, 'test']);
+// Stripe payment
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get('stripe', 'stripe');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
+
 
 //Role and Permission
 
@@ -97,6 +107,7 @@ Route::resource('user_record', userController::class);
 
 
 // test route
+Route::get('test', [UserController::class, 'test']);
 Route::get('farhan', [UserController::class, 'test']);
 
 require __DIR__.'/auth.php';
