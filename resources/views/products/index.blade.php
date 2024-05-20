@@ -34,7 +34,7 @@
                             <i class="fa fa-star star"></i>
                         </div>
 
-                        <div class="text-muted mb-3">34 reviews</div>
+                        <div class="text-muted mb-3">{{ $product->category->name}}</div>
                         <form class="add-to-cart-form">
                             @csrf
                             <input type="hidden" name="id" value="{{ $product->id}}">

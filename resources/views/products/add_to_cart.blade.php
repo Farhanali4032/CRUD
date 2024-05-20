@@ -15,9 +15,12 @@
                     <div class="m-4">
                         @if (!empty($cart))
                             <h4 class="card-title mb-4">Your shopping cart</h4>
-                            <?php $totalBill = 0 ?>
+                            <?php $totalBill = 0;
+                            ?>
                             @foreach ($cart as $product)
-                            <?php $totalBill += $product['price']?>
+                                <?php
+                                $totalBill += $product['price'];
+                                ?>
                                 <div class="row gy-3 mb-4" id="{{ $product['id'] }}">
                                     <div class="col-lg-5">
                                         <div class="me-lg-5">
@@ -66,65 +69,69 @@
             </div>
             <!-- cart -->
             <!-- summary -->
-
-            <div class="col-lg-3">
-                <form role="form" action="{{ url('stripe') }}" method="get" >
-                    <div class="card mb-3 border shadow-0">
-                        <input type="hidden" name="totalBill" value="{{ $totalBill}}">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label class="form-label required">Full Name</label>
-                                <input type="text" class="form-control" name="fname" value="{{ old('fname') }}"
-                                    autocomplete="off" />
-                                <span class="text-danger">
-                                    @error('fname')
-                                        {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label required">Phone</label>
-                                <input type="text" class="form-control" name="phone" value="{{ old('phone') }}"
-                                    autocomplete="off" />
-                                <span class="text-danger">
-                                    @error('fname')
-                                        {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card shadow-0 border">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-2">Total price:</p>
-                                <p class="mb-2">$329.00</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-2">Discount:</p>
-                                <p class="mb-2 text-success">-$60.00</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-2">TAX:</p>
-                                <p class="mb-2">$14.00</p>
-                            </div>
-                            <hr />
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-2">Total price:</p>
-                                <p class="mb-2 fw-bold">RS: {{ $totalBill}}</p>
-
-                            </div>
-
-                            <div class="mt-3">
-                                <button type="submit" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase </button>
-                                <a href="{{ route('products.index') }}" class="btn btn-light w-100 border mt-2"> Back
-                                    to
-                                    shop </a>
+            @if (isset($totalBill))
+                <div class="col-lg-3">
+                    <form role="form" action="{{ url('stripe') }}" method="get">
+                        <div class="card mb-3 border shadow-0">
+                            <input type="hidden" name="totalBill" value="{{ $totalBill }}">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label required">Full Name</label>
+                                    <input type="text" class="form-control" name="fname"
+                                        value="{{ old('fname') }}" autocomplete="off" />
+                                    <span class="text-danger">
+                                        @error('fname')
+                                            {{ $message }}
+                                        @enderror
+                                    </span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label required">Phone</label>
+                                    <input type="text" class="form-control" name="phone"
+                                        value="{{ old('phone') }}" autocomplete="off" />
+                                    <span class="text-danger">
+                                        @error('fname')
+                                            {{ $message }}
+                                        @enderror
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
+                        <div class="card shadow-0 border">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-2">Total price:</p>
+                                    <p class="mb-2">$329.00</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-2">Discount:</p>
+                                    <p class="mb-2 text-success">-$60.00</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-2">TAX:</p>
+                                    <p class="mb-2">$14.00</p>
+                                </div>
+                                <hr />
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-2">Total price:</p>
+                                    <p class="mb-2 fw-bold">RS: {{ $totalBill }}</p>
+
+                                </div>
+
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase
+                                    </button>
+                                    <a href="{{ route('products.index') }}" class="btn btn-light w-100 border mt-2">
+                                        Back
+                                        to
+                                        shop </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            @endif
+
 
             <!-- summary -->
         </div>

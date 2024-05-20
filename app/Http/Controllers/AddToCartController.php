@@ -31,7 +31,7 @@ class AddToCartController extends Controller
                 'price' => $request->price,
                 'image' => $request->image,
                 'quantity' => 1,
-                'categoty' => $request->category,
+                'category' => $request->category,
             ];
            
         }
