@@ -36,6 +36,7 @@
                         <th data-dt-column="0" colspan="1">id</th>
                         <th data-dt-column="0" colspan="1">Name</th>
                         <th>Email</th>
+                        <th>Total Records</th>
                         <th>Role</th>
                         <th>Action</th>
                     </tr>
@@ -46,6 +47,7 @@
                             <td class="dtr-control" tabindex="0">{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ countUserRecords($user->id) }}</td>
                             @if ($user->roles->isNotEmpty())
                                 <td>
                                     @foreach ($user->getRoleNames() as $role)
@@ -58,7 +60,8 @@
                     <td>
                         <a href="{{ url('role/' . $user->id . '/edit') }}" class="btn">edit</a>
                         <a href="#" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#modal-danger">Delete</a>
+                        data-bs-target="#modal-danger">Delete</a>
+                        <a href="{{ url('view/' . $user->id . '/record') }}" class="btn">View Record</a>
                     </td>
                     </tr>
                     @endforeach

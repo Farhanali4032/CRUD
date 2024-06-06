@@ -6,10 +6,13 @@ use Stripe;
 use App\Models\Product;
 use App\Models\Order as OrderModel;
 use App\Models\OrderProduct;
+use GuzzleHttp\Psr7\Query;
 use Stripe\Climate\Order;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Validator;
+use Stripe\StripeClient;
+use Stripe\Subscription;
 
 class StripePaymentController extends Controller
 {
@@ -58,12 +61,10 @@ class StripePaymentController extends Controller
 
         $orderModel->customer = $request->fname;
         $orderModel->save();
-        // dd($orderModel->all());
-        foreach($orderData as $item){
+        foreach ($orderData as $item) {
 
             $productId = $item['id'];
             $product = Product::findOrFail($productId);
-            // dd($product);
 
             $totalPrice = $item['quantity'] * $product->price;
             $orderModel->orderProduct()->create([
@@ -73,17 +74,39 @@ class StripePaymentController extends Controller
                 'quantity' => $item['quantity'],
                 'total_price' =>   $totalPrice
             ]);
-            // dd($item['categoty']);
-            // $order->product_id = $item['id'];
-            // $order->category = $item['category'];
-            // $order->product_name = $item['name'];
-            // $order->price = $item['price'];
-            // $order->quantity = $item['quantity'];
-            // $order->total_price = $totalPrice;
-            // $order->save();
-
         };
         session()->forget('cart');
         return back()->with('success', 'Payment successful!');
+    }
+
+    function subscription(Request $request)
+    {
+        $name = session('user_name');
+        $email = session('user_email');
+        // dd($name,$email);
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+
+
+        $customer = $stripe->customers->create([
+            'name' => $name,
+            'email' => $email
+        ]);
+        $stripe->customers->createSource($customer->id, ['source' => 'tok_visa']);
+        // dd($customer->id);
+        
+        $priceId = $request->priceId;
+        // dd($priceId);
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $subscription = Subscription::create([
+            'customer' => $customer->id,
+            'items' => [[
+                'price' => $priceId,
+                'quantity' => $request->qunatity,
+            ]],
+        ]);
+        return redirect()->back()->with('success', 'Offer are Subcribe');
+
+        // dd($session);
     }
 }

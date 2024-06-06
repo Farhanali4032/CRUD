@@ -44,7 +44,7 @@
 <script src="{{ asset('assets/dist/libs/litepicker/dist/litepicker.js?1684106062') }}" defer></script>
 <script src="{{ asset('assets/dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062') }}" defer></script>
 <!-- Tabler Core -->
-<script src="{{ asset('assets/dist/js/tabler.min.js?1684106062') }}" defer></script> 
+<script src="{{ asset('assets/dist/js/tabler.min.js?1684106062') }}" defer></script>
 <script src="{{ asset('assets/dist/js/demo.min.js?1684106062') }}" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -94,7 +94,7 @@
     				if( data.customProperties ){
     					return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
     				}
-    				return '<div>' + escape(data.text) + '</div>'; 
+    				return '<div>' + escape(data.text) + '</div>';
     			},
     		},
     	}));
@@ -108,6 +108,14 @@
             $('#submitButton').toggle(anyChecked);
         });
     });
+
+    // function is used to remove session message after 3 seconds
+    $("document").ready(function(){
+    setTimeout(function(){
+       $("div.alert").remove();
+    }, 3000 ); // 3 secs
+
+});
 </script>
 </body>
 

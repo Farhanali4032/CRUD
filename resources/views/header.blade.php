@@ -16,6 +16,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js?1684106062"></script>
     <!-- Datatable Link -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css" />
+    <!-- Quill Editor -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
 
     <script src="https://cdn.datatables.net/2.0.6/js/dataTables.js"></script>
     <!-- Datatable link -->
@@ -355,7 +357,7 @@
                                     <div class="dropdown-menu-columns">
                                         <div class="dropdown-menu-column">
                                             @foreach (allCate() as $category)
-                                                
+
                                             <a class="dropdown-item" href="{{ route('category.product',$category->id)}}">
                                                 {{ $category->name}}
                                             </a>
@@ -385,6 +387,30 @@
                                     </span>
                                     <span class="nav-link-title">
                                         Cart
+                                    </span>
+                                </a>
+
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('package.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M5 18a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                            <path d="M15 18a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                            <path d="M5 18h-1a1 1 0 0 1 -1 -1v-11a2 2 0 0 1 2 -2h12a4 4 0 0 1 4 4h-18">
+                                            </path>
+                                            <path d="M9 18h6"></path>
+                                            <path d="M19 18h1a1 1 0 0 0 1 -1v-4l-3 -5"></path>
+                                            <path d="M21 13h-7"></path>
+                                            <path d="M14 8v10"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Packages
                                     </span>
                                 </a>
 

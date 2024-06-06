@@ -11,6 +11,8 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UserListController;
 use App\Http\Controllers\AddToCartController;
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\SubscriptionController;
+use Stripe\Subscription;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +30,10 @@ use App\Http\Controllers\StripePaymentController;
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/', [UserController::class, 'view_user'])->middleware(['auth', 'verified','role:Admin|Manager|User','permission:student-list'])->name('dashboard');
-Route::get('student-list', [UserController::class, 'view_user'])->middleware(['auth', 'verified','role:Admin|Manager|User', 'permission:student-list'])->name('dashboard');
-Route::get('/dashboard', [UserController::class, 'view_user'])->middleware(['auth', 'verified','role:Admin|Manager|User','permission:student-list'])->name('dashboard');
+Route::get('/', [UserController::class, 'view_user'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('student-list', [UserController::class, 'view_user'])->middleware(['auth', 'verified','role:Admin|Manager|User'])->name('dashboard');
+Route::get('/dashboard', [UserController::class, 'view_user'])->middleware(['auth', 'verified','role:Admin|Manager|User'])->name('dashboard');
+Route::get('view/{id}/record', [UserController::class, 'viewRecord'])->middleware(['auth', 'verified','role:Admin|Manager|User'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -58,7 +61,7 @@ Route::get('datatable/{id}/delete', [CrudController::class, 'delete'])->middlewa
 
 
 Route::middleware(['auth', 'verified','role:Admin|Manager|User'])->group(function (){
-//User 
+//User
 Route::get('user-list', [UserListController::class, 'index'])->middleware('permission:user-list');
 Route::get('user/{id}/delete', [UserListController::class, 'userDelete'])->middleware('permission:user-delete');
 
@@ -95,6 +98,10 @@ Route::controller(StripePaymentController::class)->group(function(){
     Route::get('stripe', 'stripe');
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
+
+// Stripe subscription
+Route::get('package', [SubscriptionController::class, 'index'])->name('package.index');
+Route::post('checkout', [StripePaymentController::class , 'subscription'])->name('checkout.session');
 
 
 //Role and Permission

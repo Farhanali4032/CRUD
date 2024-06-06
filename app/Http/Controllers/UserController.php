@@ -10,10 +10,12 @@ use App\Models\Category;
 use App\Models\user_images;
 use App\Models\user_record;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Database\Eloquent\Collection;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 
@@ -21,20 +23,48 @@ class UserController extends Controller
 {
 
 
-   
+
 
     public function test()
     {
 
+        // session()->put('check', [
+        //     'name' => 'farhan',
+        //     'email' => 'farhanrazzaq4032@gmail.com'
+        // ]);
+        //     // session()->put('check');
+        // if (session()->has('check')){
+        //     echo "farhan";
+        // }
+        // else{
+        //     echo 'not';
+        // }
+
+
+        // Query Builder
+        // $user = DB::table('users')->where('id','1')->value('name');
+        // $user = DB::table('users')->pluck('email','name');
+        // $data = [];
+        // DB::table('users')->orderBy('id')->chunk(1, function (Collection $users){
+        //     foreach($users as $user){
+        //         $data[] = $user;
+        //     }
+        //     dd($data);
+        // });
+
+        // $user = DB::table('users')->pluck('email','name');
+
+
+
         // $cate = Product::all();
-        
 
-    //    $cate = allCate();
 
-    //    foreach(allCate() as $category){
-    //     echo $category->id;
-    //    }
-    //    dd($cate);
+        //    $cate = allCate();
+
+        //    foreach(allCate() as $category){
+        //     echo $category->id;
+        //    }
+        //    dd($cate);
 
         // if (Auth::check()) {
         //     $userId = Auth::User();
@@ -59,7 +89,7 @@ class UserController extends Controller
         //     $findImage = user_images::findOrFail();
         //         print_r($findImage);
         //     foreach($findImage as $path){
-                // $path->image_name;
+        // $path->image_name;
         //         dd($path);
         //     }
 
@@ -75,30 +105,42 @@ class UserController extends Controller
 
 
         // $userId = auth()->id(); \\get current id
-    //     echo $userId;
-    //     dd($userId);
+        //     echo $userId;
+        //     dd($userId);
     }
 
 
     function index()
     {
+        $user_id = session('user_id');
         $subjects = subject::all();
-        return view('form', compact('subjects'));
+        return view('form', compact('subjects', 'user_id'));
     }
 
-    //User Data 
+    //User Data
     public function view_user()
     {
         if (Auth::check()) {
             $user = Auth::User();
             $role = User::findOrFail($user->id)->getRoleNames();
+            // dd($role);
+            Session(['user_id' => $user->id]);
             Session(['user_name' => $user->name]);
             Session(['user_email' => $user->email]);
             Session(['user_role' => $role]);
-            $user_records = user_record::all();
-            $data = compact('user_records');
-            return view('dashboard')->with($data);
+            $roles = Role::findByName($role[0]);
+            if ($roles->hasPermissionTo('student-list')) {
+                $user_records = user_record::all();
+            } else {
+                $user_records = user_record::where('user_id', $user->id)->get();
+            }
+            return view('dashboard', ['user_records' => $user_records]);
         }
+    }
+
+    public function viewRecord($id){
+        $user_records = user_record::where('user_id', $id)->get();
+        return view('dashboard', ['user_records' => $user_records]);
     }
 
 
@@ -137,7 +179,7 @@ class UserController extends Controller
         $m_user_record->desc = $request['desc'];
         $m_user_record->save();
 
-        // Hobbies 
+        // Hobbies
 
         foreach ($hobbies as $hobby) {
             $m_user_record->hobbies()->create([
