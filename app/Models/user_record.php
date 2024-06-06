@@ -13,7 +13,9 @@ class user_record extends Model
 
     protected $fillable = [
         'fname',
+        'email',
         'phoneNo',
+        'age',
         'gander',
         'desc'
     ];

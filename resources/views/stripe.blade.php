@@ -9,7 +9,7 @@
     
 <div class="container">
     
-    <h1>Laravel - Stripe Payment Gateway Integration Example <br/> ItSolutionStuff.com</h1>
+    <h1>Payment <br/> bitzstudio.com</h1>
     
     <div class="row">
         <div class="col-md-6 col-md-offset-3">

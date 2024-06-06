@@ -74,11 +74,9 @@
             @enderror
           </span>
           <select type="text" class="form-select" placeholder="Select Subject" id="select-tags" name="subjects[]" multiple>
-            @foreach($user_record->subject as $subj)
-            <option value="{{$subj->id}}" selected> {{ $subj->subject }}</option>
-            @endforeach
-            @foreach ($subjects as $subj)
-            <option value="{{$subj->id}}"> {{ $subj->subject }}</option>
+            @foreach ($allSubjects as $subj)
+            <option value="{{$subj->id}}" @isset($userSubj[$subj->id])  selected
+            @endisset> {{ $subj->subject }}</option>
             @endforeach
           </select>
       </div>
