@@ -25,6 +25,7 @@ class CrudController extends Controller
     function update(Request $request, $id){
 
         $user = user_record::findOrFail($id);
+        // dd($request->subjects);
         $request->validate([
             'fname' => 'required|string|max:20',
             'email' => 'required|email|max:255',
