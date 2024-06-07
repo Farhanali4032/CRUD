@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\JoinClause;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 
@@ -27,6 +28,59 @@ class UserController extends Controller
 
     public function test()
     {
+        // $user = DB::table('user_record')
+        // ->join('hobbies','user_record.id', '=', 'hobbies.user_record_id')
+        // ->select('user_record.*','hobbies.hobbies')
+        // ->where('hobbies.hobbies','=', 'asdf')
+        // ->get();
+
+        // $user = DB::table('users')
+        // ->join('hobbies', function(JoinClause $hobby){
+        //     $hobby->on('users.id', '=', 'hobbies.hobbies');
+        //     $hobby->where('hobbies.hobbies', '=', 'asdf');
+        // })
+        // ->get();
+
+        // $student = DB::table('students')
+        // ->join('cities', 'students.city','=','cities.id')
+        // ->select('students.*', 'cities.city_name')
+        // ->where('')
+        // ->get();
+
+        // $student = DB::table('students')
+        // ->join('cities', 'students.city', '=', 'cities.id')
+        // ->select('students.*', 'cities.city_name')
+        // ->get();
+
+        // $student = DB::table('students')
+        // ->join('cities', function (JoinClause $city){
+        //     $city->on('students.city','=','cities.id');
+        //     // $city->where('cities.city_name', '=', 'lahore');
+        // })
+        // ->get();
+
+
+        // $city ='cities';
+        // $student = DB::table('students')
+        // ->join( $city, 'students.city', '=', 'cities.id')
+        // ->join('student_department', 'students.department_id', '=', 'student_department.id')
+        // ->where('student_department.department', 'like', 'BSCE%')
+        // ->update(['student_department.department' => 'BSSE']);
+
+
+
+
+        // three method of pagination in laravel 
+        // 1 paginate
+        // 2 simplePaginate
+        // 3 cursorPaginate ->this pagination is faster
+
+        $students = DB::table('students')
+                    ->orderBy('id')
+                    ->cursorPaginate(5);
+
+        // return $student;
+        return view('test', compact('students'));
 
         // session()->put('check', [
         //     'name' => 'farhan',
@@ -189,7 +243,6 @@ class UserController extends Controller
         //Image file check
         if ($request->hasFile('images')) {
             $images = $request->file('images');
-            // $imageData = [];
             foreach ($images as $image) {
                 $extension = $image->getClientOriginalExtension();
                 $image_name = time() . '.' . $extension;

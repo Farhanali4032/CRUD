@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             subject_Seeder::class,
-            privateseeder::class
+            privateseeder::class,
+            students::class
         ]);
 
     }
