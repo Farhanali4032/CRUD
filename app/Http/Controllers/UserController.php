@@ -70,17 +70,17 @@ class UserController extends Controller
 
 
 
-        // three method of pagination in laravel 
+        // three method of pagination in laravel
         // 1 paginate
         // 2 simplePaginate
         // 3 cursorPaginate ->this pagination is faster
 
-        $students = DB::table('students')
-                    ->orderBy('id')
-                    ->cursorPaginate(5);
+        // $students = DB::table('students')
+        //             ->orderBy('id')
+        //             ->cursorPaginate(5);
 
-        // return $student;
-        return view('test', compact('students'));
+        // // return $student;
+        // return view('test', compact('students'));
 
         // session()->put('check', [
         //     'name' => 'farhan',
@@ -161,6 +161,20 @@ class UserController extends Controller
         // $userId = auth()->id(); \\get current id
         //     echo $userId;
         //     dd($userId);
+
+
+
+        // $user = user_record::find(1);
+        // $name = 'Farhan';
+        // $subjects = subject::find(6);
+        // $subjects = $subjects->user_record()->where('fname', $name)->first();
+        // // $user = $user->subject;
+        // dd($subjects);
+
+            $user = User::Where("id",1)->first();
+            
+            return $user;
+
     }
 
 

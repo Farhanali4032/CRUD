@@ -71,7 +71,7 @@
                             <td class="dt-body-right">{{ $records->age }}</td>
                             <td>{{ $records->gander }}</td>
                             <td>{{stringClean($records->desc) }}</td>
-                            <td>
+                            <td style="width: 200px">
                                 <a href="{{ url('datatable/' . $records->id . '/edit') }}" class="btn">Edit</a>
                                 <a href="{{ url('datatable/' . $records->id . '/delete') }}" class="btn">Delete</a>
                             </td>
